@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>閱讀心得寫作比賽｜互動教學單元</title>
+<style>
+  :root{
+    --c1:#ff6b6b; --c2:#feca57; --c3:#48dbfb; --c4:#1dd1a1; --c5:#5f27cd;
+    --c6:#ff9ff3; --ink:#2d2d44; --paper:#fffdf7; --soft:#fff3e0;
+    --ok:#1dd1a1; --warn:#ff6b6b; --line:#e8e0d0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",sans-serif;
+    color:var(--ink); line-height:1.9; font-size:19px;
+    background:
+      radial-gradient(circle at 10% 10%, #ffe6a733 0 40%, transparent 41%),
+      radial-gradient(circle at 90% 20%, #48dbfb33 0 35%, transparent 36%),
+      radial-gradient(circle at 20% 80%, #ff9ff333 0 40%, transparent 41%),
+      linear-gradient(135deg,#fff9f0,#f0fbff);
+    background-attachment:fixed;
+  }
+  header{
+    text-align:center; padding:46px 20px 34px;
+    background:linear-gradient(120deg,var(--c1),var(--c2),var(--c3),var(--c5));
+    background-size:300% 300%; animation:flow 12s ease infinite;
+    color:#fff; box-shadow:0 6px 24px #0002; position:relative;
+  }
+  @keyframes flow{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+  header h1{font-size:2.5em; text-shadow:2px 3px 0 #0003; letter-spacing:2px;}
+  header p{font-size:1.15em; margin-top:12px; opacity:.95;}
+  .badge{display:inline-block; background:#fff; color:var(--c5); font-weight:bold;
+    padding:5px 16px; border-radius:30px; margin-top:16px; font-size:.85em; box-shadow:0 3px 0 #0002;}
+
+  nav{position:sticky; top:0; z-index:50; background:#ffffffee; backdrop-filter:blur(8px);
+    display:flex; flex-wrap:wrap; justify-content:center; gap:8px; padding:12px;
+    box-shadow:0 3px 12px #0001; border-bottom:3px solid var(--c2);}
+  nav a{text-decoration:none; color:var(--ink); font-weight:bold; font-size:.95em;
+    padding:8px 15px; border-radius:30px; background:var(--soft); transition:.2s; cursor:pointer;}
+  nav a:hover{background:var(--c2); transform:translateY(-2px);}
+
+  main{max-width:960px; margin:0 auto; padding:30px 18px 80px;}
+  section{background:var(--paper); border-radius:22px; padding:32px 30px; margin:26px 0;
+    box-shadow:0 8px 26px #0000001a; border:3px solid #fff; position:relative; overflow:hidden;}
+  section::before{content:""; position:absolute; top:0; left:0; width:100%; height:8px;
+    background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c5));}
+  h2{font-size:1.7em; margin-bottom:6px; display:flex; align-items:center; gap:12px;}
+  h2 .num{background:var(--c5); color:#fff; width:44px; height:44px; border-radius:14px;
+    display:grid; place-items:center; font-size:.85em; box-shadow:0 4px 0 #0002; flex:none;}
+  .lead{color:#7a6f5a; margin:6px 0 20px; font-size:1.02em;}
+  h3{font-size:1.25em; margin:22px 0 10px; color:var(--c5);}
+
+  .rule{display:flex; gap:14px; align-items:flex-start; background:var(--soft);
+    border-radius:14px; padding:16px 18px; margin:12px 0; border-left:7px solid var(--c2);
+    transition:.2s;}
+  .rule:hover{transform:translateX(6px); box-shadow:0 4px 14px #0001;}
+  .rule .ico{font-size:1.6em; flex:none;}
+  .rule b{color:var(--c1);}
+
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px; margin-top:8px;}
+  .card{border-radius:18px; padding:20px; color:#fff; box-shadow:0 6px 0 #0002; cursor:pointer; transition:.2s;}
+  .card:hover{transform:translateY(-5px) rotate(-1deg);}
+  .card h4{font-size:1.2em; margin-bottom:8px;}
+  .card .n{font-size:2.2em; font-weight:bold; opacity:.4; float:right; line-height:1;}
+  .card small{display:block; margin-top:10px; background:#ffffff33; border-radius:10px; padding:6px 10px; font-size:.85em;}
+  .b1{background:linear-gradient(135deg,#ff6b6b,#ff8e53);}
+  .b2{background:linear-gradient(135deg,#48dbfb,#0abde3);}
+  .b3{background:linear-gradient(135deg,#1dd1a1,#10ac84);}
+  .b4{background:linear-gradient(135deg,#5f27cd,#9c27ff);}
+
+  .warnbox{background:#fff0f0; border:3px dashed var(--warn); border-radius:16px; padding:18px 22px; margin:16px 0;}
+  .warnbox h3{color:var(--warn); margin-top:0;}
+  .warnbox ul{margin-left:22px;} .warnbox li{margin:6px 0;}
+
+  /* 字數計算器 */
+  .counter{margin-top:14px;}
+  .tabbtns{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .tabbtn{border:none; cursor:pointer; padding:10px 16px; border-radius:30px; font-weight:bold;
+    font-size:.9em; background:#eee; transition:.2s;}
+  .tabbtn.active{color:#fff;}
+  .tabbtn[data-i="0"].active{background:var(--c1);}
+  .tabbtn[data-i="1"].active{background:var(--c3);}
+  .tabbtn[data-i="2"].active{background:var(--c4);}
+  .tabbtn[data-i="3"].active{background:var(--c5);}
+  textarea{width:100%; min-height:150px; border:3px solid var(--line); border-radius:14px;
+    padding:14px; font-size:1em; font-family:inherit; resize:vertical; line-height:1.8;}
+  textarea:focus{outline:none; border-color:var(--c3);}
+  .meter{margin-top:12px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .meter .count{font-size:1.5em; font-weight:bold;}
+  .bar{flex:1; min-width:160px; height:16px; background:#eee; border-radius:20px; overflow:hidden;}
+  .bar span{display:block; height:100%; width:0; transition:.4s; background:linear-gradient(90deg,var(--c1),var(--c4));}
+  .status{font-weight:bold; padding:5px 14px; border-radius:20px; font-size:.9em;}
+  .status.no{background:#ffe0e0; color:var(--warn);}
+  .status.yes{background:#d7fbef; color:var(--ok);}
+  .hint{font-size:.85em; color:#8a7f6a; margin-top:6px;}
+
+  /* 評分規準互動表 */
+  .scorebtns{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 18px;}
+  .sbtn{border:none; cursor:pointer; font-weight:bold; font-size:1.05em; color:#fff;
+    padding:14px 10px; border-radius:14px; flex:1; min-width:90px; transition:.2s; box-shadow:0 5px 0 #0002;}
+  .sbtn:hover{transform:translateY(-3px);}
+  .sbtn.on{transform:translateY(2px); box-shadow:0 2px 0 #0002; outline:4px solid #ffffff; outline-offset:-4px;}
+  .s5{background:#1dd1a1;} .s4{background:#48dbfb;} .s3{background:#feca57;}
+  .s2{background:#ff9f43;} .s1{background:#ff6b6b;}
+  .scorepanel{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px;}
+  .scol{background:var(--soft); border-radius:14px; padding:16px 18px; border-top:6px solid var(--c5);}
+  .scol h4{color:var(--c5); margin-bottom:8px; font-size:1.05em;}
+  .scol ul{margin-left:20px;} .scol li{margin:6px 0; font-size:.95em;}
+  .scoretitle{font-size:1.15em; font-weight:bold; margin-bottom:12px; padding:10px 16px; border-radius:12px; color:#fff;}
+
+  /* 測驗 */
+  .q{background:var(--soft); border-radius:16px; padding:20px; margin:16px 0; border-left:8px solid var(--c3);}
+  .q .qt{font-weight:bold; font-size:1.08em; margin-bottom:12px;}
+  .opts{display:grid; gap:10px;}
+  .opt{background:#fff; border:3px solid var(--line); border-radius:12px; padding:12px 16px;
+    cursor:pointer; transition:.15s; font-size:.98em;}
+  .opt:hover{border-color:var(--c3); background:#f0fbff;}
+  .opt.correct{border-color:var(--ok); background:#d7fbef; font-weight:bold;}
+  .opt.wrong{border-color:var(--warn); background:#ffe0e0;}
+  .fb{margin-top:12px; padding:12px 16px; border-radius:12px; font-size:.95em; display:none;}
+  .fb.show{display:block;}
+  .fb.right{background:#d7fbef; color:#0a7; }
+  .fb.no{background:#ffe0e0; color:#c33;}
+  .scorebox{text-align:center; margin-top:20px; padding:20px; border-radius:16px;
+    background:linear-gradient(135deg,var(--c2),var(--c1)); color:#fff; font-size:1.3em; font-weight:bold; display:none;}
+  .scorebox.show{display:block; animation:pop .5s;}
+  @keyframes pop{0%{transform:scale(.7);opacity:0}100%{transform:scale(1);opacity:1}}
+
+  /* 檢核清單 */
+  .check{display:flex; gap:14px; align-items:flex-start; background:#fff; border:3px solid var(--line);
+    border-radius:14px; padding:14px 18px; margin:10px 0; cursor:pointer; transition:.2s;}
+  .check:hover{border-color:var(--c4);}
+  .check.done{background:#d7fbef; border-color:var(--ok);}
+  .check .box{width:30px; height:30px; border-radius:9px; border:3px solid var(--c4); flex:none;
+    display:grid; place-items:center; font-size:1.1em; color:#fff; transition:.2s;}
+  .check.done .box{background:var(--ok); border-color:var(--ok);}
+  .progress{margin:18px 0 6px; height:22px; background:#eee; border-radius:20px; overflow:hidden; position:relative;}
+  .progress span{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--c4),var(--c3)); transition:.5s;}
+  .progress b{position:absolute; inset:0; display:grid; place-items:center; font-size:.85em; color:var(--ink);}
+  .celebrate{text-align:center; font-size:1.3em; font-weight:bold; color:var(--c4); margin-top:14px; display:none;}
+  .celebrate.show{display:block; animation:pop .5s;}
+
+  .soundtoggle{position:fixed; right:16px; bottom:16px; z-index:99; background:var(--c5); color:#fff;
+    border:none; border-radius:50%; width:58px; height:58px; font-size:1.5em; cursor:pointer;
+    box-shadow:0 6px 16px #0004; transition:.2s;}
+  .soundtoggle:hover{transform:scale(1.1);}
+  .soundtoggle.off{background:#aaa;}
+
+  footer{text-align:center; padding:30px 20px 50px; color:#8a7f6a; font-size:.9em;}
+  .pill{display:inline-block; background:var(--c4); color:#fff; border-radius:20px; padding:2px 12px; font-size:.85em; font-weight:bold;}
+  @media(max-width:600px){ body{font-size:17px;} header h1{font-size:1.9em;} section{padding:24px 18px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📖 閱讀心得寫作比賽</h1>
+  <p>互動教學單元 · 帶你一步步寫出高分好文</p>
+  <div class="badge">全國高級中等學校閱讀心得寫作比賽 · 適用高中生</div>
+</header>
+
+<nav>
+  <a onclick="go('s1')">① 遊戲規則</a>
+  <a onclick="go('s2')">② 四大架構</a>
+  <a onclick="go('s3')">③ 字數計算</a>
+  <a onclick="go('s4')">④ 評分規準</a>
+  <a onclick="go('s5')">⑤ 扣分陷阱</a>
+  <a onclick="go('s6')">⑥ 小測驗</a>
+  <a onclick="go('s7')">⑦ 檢核清單</a>
+</nav>
+
+<main>
+
+<!-- 1 注意事項 -->
+<section id="s1">
+  <h2><span class="num">1</span>比賽的遊戲規則</h2>
+  <p class="lead">先把規則搞懂，再開始動筆。違反這些規定，可能會被「取消參賽資格」，非常可惜！</p>
+
+  <div class="rule"><span class="ico">📚</span><div><b>選書限制</b>：只能選「中文或英文」的<b>課外書籍</b>，而且書必須<b>有頁碼</b>。</div></div>
+  <div class="rule"><span class="ico">🈶</span><div><b>語文一致</b>：選中文書就用<b>繁體中文</b>寫、勾選中文作品；選英文書就用<b>英文</b>寫、勾選英文作品。投錯語文別會取消資格。</div></div>
+  <div class="rule"><span class="ico">🚫</span><div><b>不可放圖表</b>：作品中<b>不得出現圖片或表格</b>，違反者取消資格。</div></div>
+  <div class="rule"><span class="ico">✍️</span><div><b>全篇同一語言</b>：整篇限全中文或全英文；標點符號依中／英書寫慣例，<b>不能中英混用</b>。</div></div>
+  <div class="rule"><span class="ico">🕵️</span><div><b>匿名原則</b>：標題與內容<b>不得出現自己的姓名和學校名稱</b>，以維持評審公平。</div></div>
+  <div class="rule"><span class="ico">📐</span><div><b>版面整齊</b>：全篇段落開頭要<b>整齊一致</b>，段落與段落之間<b>空一行</b>。</div></div>
+</section>
+
+<!-- 2 四大架構 -->
+<section id="s2">
+  <h2><span class="num">2</span>作品的四大架構</h2>
+  <p class="lead">每篇參賽作品都由這四個部分組成。點一下卡片，看看各部分的重點與字數規定。</p>
+  <div class="cards">
+    <div class="card b1" onclick="flip(this)">
+      <span class="n">1</span><h4>圖書作者與內容簡介</h4>
+      讓評審認識這本書與作者。
+      <small>中文 100～200 字／英文 40～80 字<br>✅ 此段不列入抄襲比對</small>
+    </div>
+    <div class="card b2" onclick="flip(this)">
+      <span class="n">2</span><h4>內容摘錄</h4>
+      摘錄書中有意義的文字。
+      <small>中文 100～300 字／英文 60～150 字<br>⚠️ 一定要註明頁碼！</small>
+    </div>
+    <div class="card b3" onclick="flip(this)">
+      <span class="n">3</span><h4>我的觀點</h4>
+      個人的心得與感想（最重要！）。
+      <small>中文 1000 字以上／英文 600 字以上<br>⭐ 評分主要段落，列入抄襲檢核</small>
+    </div>
+    <div class="card b4" onclick="flip(this)">
+      <span class="n">4</span><h4>討論議題</h4>
+      針對書的內容提出討論議題。
+      <small>至少提出 1 個相關議題<br>⚠️ 列入抄襲檢核</small>
+    </div>
+  </div>
+  <div class="warnbox" style="margin-top:22px;">
+    <h3>💡 關鍵提醒</h3>
+    <ul>
+      <li>「<b>我的觀點</b>」是拿分關鍵，占最多篇幅（中文至少 1000 字），要寫出真正屬於自己的想法。</li>
+      <li>「<b>內容摘錄</b>」務必<b>註明頁碼</b>，沒寫頁碼會被扣分。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3 字數計算器 -->
+<section id="s3">
+  <h2><span class="num">3</span>字數即時計算器</h2>
+  <p class="lead">把你寫的內容貼進來（或直接練習打字），系統會即時算字數，並告訴你是否符合規定。這裡以<b>中文</b>字數標準示範。</p>
+  <div class="counter">
+    <div class="tabbtns">
+      <button class="tabbtn active" data-i="0" onclick="switchTab(0)">① 內容簡介</button>
+      <button class="tabbtn" data-i="1" onclick="switchTab(1)">② 內容摘錄</button>
+      <button class="tabbtn" data-i="2" onclick="switchTab(2)">③ 我的觀點</button>
+      <button class="tabbtn" data-i="3" onclick="switchTab(3)">④ 討論議題</button>
+    </div>
+    <textarea id="ta" placeholder="在這裡輸入或貼上你的內容…" oninput="countWords()"></textarea>
+    <div class="meter">
+      <span class="count"><b id="cnum">0</b> 字</span>
+      <div class="bar"><span id="cbar"></span></div>
+      <span class="status no" id="cstat">尚未達標</span>
+    </div>
+    <p class="hint" id="chint"></p>
+  </div>
+</section>
+
+<!-- 4 評分規準 -->
+<section id="s4">
+  <h2><span class="num">4</span>評分規準互動表</h2>
+  <p class="lead">評審從三個面向打分：<b>立意取材</b>、<b>組織結構</b>、<b>修辭格式</b>。點選 1～5 分，看看每個等級的文章長什麼樣子。目標是拿到 5 分！</p>
+  <div class="scorebtns">
+    <button class="sbtn s5 on" onclick="showScore(5,this)">5 分 優</button>
+    <button class="sbtn s4" onclick="showScore(4,this)">4 分 良</button>
+    <button class="sbtn s3" onclick="showScore(3,this)">3 分 可</button>
+    <button class="sbtn s2" onclick="showScore(2,this)">2 分 差</button>
+    <button class="sbtn s1" onclick="showScore(1,this)">1 分 劣</button>
+  </div>
+  <div id="scoretitle" class="scoretitle"></div>
+  <div class="scorepanel" id="scorepanel"></div>
+</section>
+
+<!-- 5 扣分陷阱 -->
+<section id="s5">
+  <h2><span class="num">5</span>一定要避開的扣分陷阱</h2>
+  <p class="lead">這些是備註欄與 1 分（劣）作品的特徵，踩到就會失分甚至被判定，務必小心！</p>
+
+  <div class="warnbox">
+    <h3>➖ 會被扣分的情形</h3>
+    <ul>
+      <li><b>內容摘錄未註明頁碼</b> → 扣 1 分。</li>
+      <li><b>每次引用超過 50 字</b>（不含標點）→ 視為格式不符，扣 1 分。</li>
+      <li>段落開頭不整齊、段落間沒空行、標點中英混用 → 影響版面格式分數。</li>
+    </ul>
+  </div>
+  <div class="warnbox" style="border-color:#c0392b; background:#fff5f5;">
+    <h3 style="color:#c0392b;">🚨 判為 1 分（劣）或疑似抄襲</h3>
+    <ul>
+      <li><b>引用資料未加引號</b> → 視為<b>疑似抄襲</b>（中文用「」、英文用 " "）。</li>
+      <li>只是<b>堆砌書中佳句</b>、寫成一本書的<b>導讀形式</b>，沒有個人見解。</li>
+      <li>作品由<b>文章產生器</b>隨機組合，或由 <b>AI 工具生成／修潤</b>。</li>
+      <li>標題或內容出現<b>校名、作者姓名</b>等可辨識身分的資料。</li>
+      <li><b>中英文作品投錯語文別</b>。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 6 測驗 -->
+<section id="s6">
+  <h2><span class="num">6</span>小試身手：規則測驗</h2>
+  <p class="lead">試著回答下面 5 題，檢查你是否真的懂了！選對會有音效鼓勵你唷。</p>
+  <div id="quiz"></div>
+  <div class="scorebox" id="quizscore"></div>
+</section>
+
+<!-- 7 檢核清單 -->
+<section id="s7">
+  <h2><span class="num">7</span>投稿前的最終檢核清單</h2>
+  <p class="lead">交出作品前，把下面每一項都打勾，確認你都做到了！全部完成會有驚喜。</p>
+  <div class="progress"><span id="chkbar"></span><b id="chktext">0 / 8 完成</b></div>
+  <div id="checklist"></div>
+  <div class="celebrate" id="celebrate">🎉 太棒了！你已完成所有檢核，可以安心投稿囉！</div>
+</section>
+
+</main>
+
+<button class="soundtoggle" id="sndbtn" onclick="toggleSound()" title="開關音效">🔊</button>
+
+<footer>
+  資料來源：<span class="pill">115 學年度全國高級中等學校閱讀心得寫作比賽實施計畫</span><br>
+  附件1 圖書選擇與參賽作品之注意事項 · 附件2 評分規準 ｜ 本教學單元僅供學習參考
+</footer>
+
+<script>
+/* ---------- 音效（Web Audio，無外部檔案） ---------- */
+let soundOn = true, actx = null;
+function ac(){ if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)(); return actx; }
+function beep(freq, dur, type, vol){
+  if(!soundOn) return;
+  try{
+    const c=ac(), o=c.createOscillator(), g=c.createGain();
+    o.type=type||'sine'; o.frequency.value=freq;
+    g.gain.value=vol||0.15; o.connect(g); g.connect(c.destination);
+    o.start(); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime+(dur||0.15));
+    o.stop(c.currentTime+(dur||0.15));
+  }catch(e){}
+}
+function sndClick(){ beep(520,0.08,'triangle',0.12); }
+function sndRight(){ beep(660,0.12,'sine',0.15); setTimeout(()=>beep(880,0.16,'sine',0.15),110); setTimeout(()=>beep(1175,0.2,'sine',0.14),240); }
+function sndWrong(){ beep(200,0.25,'sawtooth',0.12); }
+function sndPop(){ beep(700,0.08,'square',0.1); }
+function sndWin(){ [523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,0.22,'sine',0.16),i*140)); }
+function toggleSound(){
+  soundOn=!soundOn;
+  const b=document.getElementById('sndbtn');
+  b.textContent = soundOn?'🔊':'🔇'; b.classList.toggle('off',!soundOn);
+  if(soundOn) sndClick();
+}
+function go(id){ sndClick(); document.getElementById(id).scrollIntoView(); }
+
+/* ---------- 卡片翻轉小效果 ---------- */
+function flip(el){ sndPop(); el.style.transform='scale(1.05) rotate(1deg)';
+  setTimeout(()=>el.style.transform='',260); }
+
+/* ---------- 字數計算 ---------- */
+const specs=[
+  {name:'圖書作者與內容簡介', min:100, max:200},
+  {name:'內容摘錄', min:100, max:300},
+  {name:'我的觀點', min:1000, max:null},
+  {name:'討論議題', min:1, max:null, unit:'（至少提出一個議題）'}
+];
+let curTab=0, texts=['','','',''];
+function switchTab(i){
+  sndClick();
+  texts[curTab]=document.getElementById('ta').value;
+  curTab=i;
+  document.querySelectorAll('.tabbtn').forEach((b,k)=>b.classList.toggle('active',k===i));
+  document.getElementById('ta').value=texts[i];
+  countWords();
+}
+function countWords(){
+  const t=document.getElementById('ta').value;
+  const n=(t.replace(/\s/g,'').match(/[一-龥＀-￯\w]/g)||[]).length;
+  const s=specs[curTab];
+  document.getElementById('cnum').textContent=n;
+  let pct, ok, msg;
+  if(s.max){
+    pct=Math.min(100, n/s.max*100);
+    ok = n>=s.min && n<=s.max;
+    if(n<s.min) msg=`還差 ${s.min-n} 字才達到下限（${s.min}～${s.max} 字）`;
+    else if(n>s.max) msg=`超過上限 ${n-s.max} 字（規定 ${s.min}～${s.max} 字）`;
+    else msg=`字數符合規定（${s.min}～${s.max} 字）👍`;
+  }else{
+    pct=Math.min(100, n/(s.min>1?s.min:20)*100);
+    ok = n>=s.min;
+    if(s.min>1){ msg = n>=s.min ? `字數達標（${s.min} 字以上）👍` : `還差 ${s.min-n} 字才達到 ${s.min} 字下限`; }
+    else { msg = n>0 ? '已輸入討論議題 👍 '+ (s.unit||'') : '請至少提出一個討論議題'; }
+  }
+  document.getElementById('cbar').style.width=pct+'%';
+  const st=document.getElementById('cstat');
+  st.textContent = ok?'符合規定':'尚未達標';
+  st.className = 'status '+(ok?'yes':'no');
+  document.getElementById('chint').textContent = `【${s.name}】${msg}`;
+}
+
+/* ---------- 評分規準 ---------- */
+const rubric={
+  5:{c:'#1dd1a1',t:'5 分（優）— 優秀的文章',
+    a:['精確選取書中材料，連結自己的生活經驗或事例，深刻表達情感、價值觀、想像力與創造力。','扣緊文本歸納分析，透闢表達個人觀點並生發議論。','中心論點突顯主旨、有說服力，議論與創作有獨到之處。'],
+    b:['文章結構嚴謹、脈絡分明，前後邏輯連貫，扣緊題旨。','深入辯證文本本質與現象，提出開放性且非常有深度的討論議題。'],
+    d:['能精確使用詞語及各種句型，文句流暢。','幾乎沒有錯字、標點、版面及格式的錯誤。']},
+  4:{c:'#48dbfb',t:'4 分（良）— 表現不錯的文章',
+    a:['能掌握書中論述材料與觀點，提出個人看法。','以書中觀點印證個人看法，兩者有緊密互動與對話。','中心論點能正確闡述主旨。'],
+    b:['文章結構完整，但偶有轉折不流暢之處。','提出開放性且有深度的討論議題。'],
+    d:['能正確使用詞語及各種句型，文句通暢。','少有錯字、標點、版面及格式錯誤，但不影響文意。']},
+  3:{c:'#feca57',t:'3 分（可）— 表現尚可的文章',
+    a:['能提出個人見解，但引用原書材料與觀點稍多。','個人論述與對書中要旨的掌握較不足。','只對論點做闡述，未能補充印證。'],
+    b:['文章結構大致完整，但偶有不連貫、轉折不清。','提出開放性且稍有深度的討論議題。'],
+    d:['流暢、表達能力強，但錯字及標點錯誤稍多。','有一些版面及格式錯誤，但不影響文意。']},
+  2:{c:'#ff9f43',t:'2 分（差）— 失誤較多的文章',
+    a:['雖有個人見解，但引述書中句子稍多。','個人觀點較少，對書中主旨掌握欠深入。'],
+    b:['文章結構鬆散，或前後不連貫。','提出深度不足的討論議題。'],
+    d:['堪稱流暢，但錯字及標點錯誤較多。','不太能掌握版面及格式。']},
+  1:{c:'#ff6b6b',t:'1 分（劣）— 不符規定的文章',
+    a:['多半以堆砌書中佳句為主。','寫成導讀一本書的形式。','較無個人見解，形成空洞議論。'],
+    b:['文章結構不完整，或僅有單一段落。','提出封閉性或沒有深度的討論議題。'],
+    d:['遣詞造句常有錯誤，錯字及標點極多、不能掌握版面。','由文章產生器或 AI 工具生成／修潤、出現校名姓名、投錯語文別等。']}
+};
+function showScore(n, btn){
+  sndPop();
+  document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const r=rubric[n];
+  const tt=document.getElementById('scoretitle');
+  tt.textContent=r.t; tt.style.background=r.c;
+  const li=arr=>arr.map(x=>`<li>${x}</li>`).join('');
+  document.getElementById('scorepanel').innerHTML=
+    `<div class="scol"><h4>🎯 立意取材</h4><ul>${li(r.a)}</ul></div>
+     <div class="scol"><h4>🏗️ 組織結構</h4><ul>${li(r.b)}</ul></div>
+     <div class="scol"><h4>✒️ 修辭、格式</h4><ul>${li(r.d)}</ul></div>`;
+}
+
+/* ---------- 測驗 ---------- */
+const quiz=[
+  {q:'選書時，下列哪一種書「符合」比賽規定？',
+   o:['一本沒有頁碼的電子漫畫','一本有頁碼的中文課外書','課本或教科書','一段網路文章'],
+   a:1, e:'圖書之選擇以中文或英文「課外書籍」且「有頁碼」者為限。'},
+  {q:'「我的觀點」這一段，中文字數的規定是？',
+   o:['100～200 字','300 字以內','1000 字以上','沒有規定'],
+   a:2, e:'「我的觀點」是評分主要段落，中文須 1000 字以上（英文 600 字以上）。'},
+  {q:'關於「內容摘錄」，下列何者正確？',
+   o:['不需要註明出處','必須註明摘錄文字的頁碼，否則扣分','可以任意超過 100 字引用','可以放進表格呈現'],
+   a:1, e:'內容摘錄須註明頁碼，未註明扣 1 分；且每次引用不得超過 50 字。'},
+  {q:'下列哪一項會被取消參賽資格或判為 1 分？',
+   o:['段落之間空一行','作品中出現自己的學校名稱','提出開放性的討論議題','用繁體中文寫中文書心得'],
+   a:1, e:'標題或內容出現校名、姓名等可辨識身分的資料會影響公平性；此外由 AI 生成、放圖表、投錯語文別等也會被判定。'},
+  {q:'引用書中的資料時，正確的做法是？',
+   o:['直接抄下來就好','中文加上「」引號標示，且每次不超過 50 字','越長越能展現閱讀量','翻成自己的話但不註明'],
+   a:1, e:'引用未加引號視為疑似抄襲；中文用「」、英文用 " "，且每次引用不得超過 50 字。'}
+];
+let answered=0, correct=0;
+function buildQuiz(){
+  const box=document.getElementById('quiz');
+  box.innerHTML=quiz.map((item,qi)=>
+    `<div class="q"><div class="qt">Q${qi+1}. ${item.q}</div>
+      <div class="opts">${item.o.map((op,oi)=>
+        `<div class="opt" onclick="answer(${qi},${oi},this)">${String.fromCharCode(65+oi)}. ${op}</div>`).join('')}</div>
+      <div class="fb" id="fb${qi}"></div></div>`).join('');
+}
+function answer(qi,oi,el){
+  const parent=el.parentElement;
+  if(parent.dataset.done) return;
+  parent.dataset.done='1'; answered++;
+  const item=quiz[qi], fb=document.getElementById('fb'+qi);
+  const opts=parent.querySelectorAll('.opt');
+  if(oi===item.a){
+    el.classList.add('correct'); correct++; sndRight();
+    fb.className='fb show right'; fb.innerHTML='✅ 答對了！'+item.e;
+  }else{
+    el.classList.add('wrong'); opts[item.a].classList.add('correct'); sndWrong();
+    fb.className='fb show no'; fb.innerHTML='❌ 再想想～ 正確答案是 '+String.fromCharCode(65+item.a)+'。'+item.e;
+  }
+  if(answered===quiz.length){
+    const sc=document.getElementById('quizscore');
+    sc.className='scorebox show';
+    let msg = correct===quiz.length?'🏆 滿分！你完全掌握規則了！':correct>=3?'👍 不錯！再複習一下就更穩囉！':'💪 別氣餒，回上面再讀一次規則吧！';
+    sc.innerHTML=`你答對 ${correct} / ${quiz.length} 題<br>${msg}`;
+    if(correct===quiz.length) sndWin();
+  }
+}
+
+/* ---------- 檢核清單 ---------- */
+const checks=[
+  '選的是有頁碼的中文／英文課外書籍',
+  '全篇語言一致，並勾選正確的語文別',
+  '包含四大項：簡介、摘錄、我的觀點、討論議題',
+  '「我的觀點」中文達 1000 字以上',
+  '內容摘錄有註明頁碼，每次引用不超過 50 字',
+  '引用文字都有加引號（中文「」／英文 " "）',
+  '作品中沒有圖片、表格，也沒有姓名與校名',
+  '段落開頭整齊、段落之間有空一行'
+];
+let doneCount=0;
+function buildChecklist(){
+  document.getElementById('checklist').innerHTML=checks.map((c,i)=>
+    `<div class="check" onclick="toggleCheck(${i},this)"><div class="box">✓</div><div>${c}</div></div>`).join('');
+}
+function toggleCheck(i,el){
+  el.classList.toggle('done');
+  if(el.classList.contains('done')){ doneCount++; sndPop(); }
+  else doneCount--;
+  const pct=doneCount/checks.length*100;
+  document.getElementById('chkbar').style.width=pct+'%';
+  document.getElementById('chktext').textContent=`${doneCount} / ${checks.length} 完成`;
+  const cel=document.getElementById('celebrate');
+  if(doneCount===checks.length){ cel.classList.add('show'); sndWin(); }
+  else cel.classList.remove('show');
+}
+
+/* ---------- 初始化 ---------- */
+showScore(5, document.querySelector('.sbtn.s5'));
+buildQuiz(); buildChecklist(); countWords();
+</script>
+</body>
+</html>
